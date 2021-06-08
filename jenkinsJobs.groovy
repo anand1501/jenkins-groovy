@@ -1,7 +1,7 @@
 job("j-job1"){
         description("this job will copy the file in you os version and push image to docker hub")
         scm {
-                 github('notarunkumar/autodockerfile' , 'master')
+                 github('anand1501/autodockerfile' , 'master')
              }
         triggers {
                 scm("* * * * *")
@@ -10,8 +10,8 @@ job("j-job1"){
 
         steps {
         shell('''sudo cp * /html/
-sudo docker build -t corruptgenius/http:latest .
-sudo docker push corruptgenius/http''')
+sudo docker build -t anand1501/http:latest .
+sudo docker push anand1501/http''')
       }
 }
 
@@ -31,14 +31,14 @@ job("j-job2"){
 then
 echo " updating"
 else
-sudo kubectl create deployment myweb --image=corruptgenius/http
+sudo kubectl create deployment myweb --image=anand1501/http
 sudo kubectl autoscale deployment myweb --min=10 --max=15 --cpu-percent=80
 fi
 if sudo kubectl get deployment -o wide | grep latest
 then 
-sudo kubectl set image deployment myweb http=corruptgenius/http
+sudo kubectl set image deployment myweb http=anand1501/http
 else
-sudo kubectl set image deployment myweb http=corruptgenius/http:latest
+sudo kubectl set image deployment myweb http=anand1501/http:latest
 fi
 if sudo kubectl get service | grep myweb
 then 
@@ -73,13 +73,13 @@ fi''')
           attachBuildLog(true)
           subject('Build successfull')
           content('The build was successful and deployment was done.')
-          recipientList('ak999arunkumar@gmail.com')
+          recipientList('anand31798@gmail.com')
         }
         failure{
           attachBuildLog(true)
           subject('Failed build')
           content('The build was failed')
-          recipientList('ak999arunkumar@gmail.com')
+          recipientList('anand31798@gmail.com')
         }
       }
     }
